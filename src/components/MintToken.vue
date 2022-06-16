@@ -1,19 +1,23 @@
 <template>
-  <div>
-    <h1>RoboPunks</h1>
-    <p>
-      It's 2078. Can the RoboPunks NFT save humans from destructive rampant NFT
-      speculation? Mint RoboPunks to find out.
-    </p>
-    <div v-if="store.state.isLogin">
+  <div class="web3-content">
+    <div id="mint">
       <div>
-        <button @click="handleDecrement">-</button>
-        <input :value="mintAmount" type="number" />
-        <button @click="handleIncrement">+</button>
+        <h1 id="title">RoboPunks</h1>
+        <p id="description">
+          It's 2078. Can the RoboPunks NFT save humans from destructive rampant
+          NFT speculation? Mint RoboPunks to find out.
+        </p>
+        <div v-if="store.state.isLogin">
+          <div id="chosen-amounts">
+            <button id="decrement" @click="handleDecrement">-</button>
+            <input :value="mintAmount" type="number" readonly />
+            <button id="increment" @click="handleIncrement">+</button>
+          </div>
+          <button id="minting" @click="mintNFT">Mint now</button>
+        </div>
+        <p v-else id="get-connect">Connect to mint NFT</p>
       </div>
-      <button @click="mintNFT">Mint now</button>
     </div>
-    <p v-else>Connect to mint NFT</p>
   </div>
 </template>
 
