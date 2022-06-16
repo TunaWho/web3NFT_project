@@ -1,4 +1,4 @@
-# minter-project
+# robopunk-project
 
 ## Project setup
 ```
