@@ -72,6 +72,12 @@ export const getAccountForMetaMask = async () => {
   return accounts;
 };
 
+/**
+ * This function checks if the user can mint tokens.
+ * @param web3 - web3 instance
+ * @param accountAddress - The address of the account that is trying to mint
+ * @returns A boolean value.
+ */
 export const canMint = async (web3, accountAddress) => {
   try {
     const sprite = new web3.eth.Contract(
