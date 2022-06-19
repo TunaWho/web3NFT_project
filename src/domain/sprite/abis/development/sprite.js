@@ -1,6 +1,13 @@
 export default {
   abi: [
-    { inputs: [], stateMutability: 'payable', type: 'constructor' },
+    {
+      inputs: [
+        { internalType: 'string', name: '_name', type: 'string' },
+        { internalType: 'string', name: '_symbol', type: 'string' },
+      ],
+      stateMutability: 'payable',
+      type: 'constructor',
+    },
     {
       anonymous: false,
       inputs: [
@@ -104,6 +111,20 @@ export default {
       inputs: [{ internalType: 'address', name: 'owner', type: 'address' }],
       name: 'balanceOf',
       outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [],
+      name: 'baseExtension',
+      outputs: [{ internalType: 'string', name: '', type: 'string' }],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [{ internalType: 'address', name: '_from', type: 'address' }],
+      name: 'canMint',
+      outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
       stateMutability: 'view',
       type: 'function',
     },
@@ -222,18 +243,18 @@ export default {
     },
     {
       inputs: [
-        { internalType: 'string', name: '_baseTokenUri', type: 'string' },
+        { internalType: 'bool', name: '_isPublicMintEnabled', type: 'bool' },
       ],
-      name: 'setBaseTokenUri',
+      name: 'setIsPublicMintEnabled',
       outputs: [],
       stateMutability: 'nonpayable',
       type: 'function',
     },
     {
       inputs: [
-        { internalType: 'bool', name: '_isPublicMintEnabled', type: 'bool' },
+        { internalType: 'string', name: '_baseTokenURI', type: 'string' },
       ],
-      name: 'setIsPublicMintEnabled',
+      name: 'setTokenURI',
       outputs: [],
       stateMutability: 'nonpayable',
       type: 'function',
@@ -253,6 +274,23 @@ export default {
       type: 'function',
     },
     {
+      inputs: [{ internalType: 'uint256', name: 'index', type: 'uint256' }],
+      name: 'tokenByIndex',
+      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [
+        { internalType: 'address', name: 'owner', type: 'address' },
+        { internalType: 'uint256', name: 'index', type: 'uint256' },
+      ],
+      name: 'tokenOfOwnerByIndex',
+      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
       inputs: [{ internalType: 'uint256', name: '_tokenId', type: 'uint256' }],
       name: 'tokenURI',
       outputs: [{ internalType: 'string', name: '', type: 'string' }],
@@ -268,8 +306,8 @@ export default {
     },
     {
       inputs: [],
-      name: 'totalSupplyMinted',
-      outputs: [{ internalType: 'uint256', name: '_value', type: 'uint256' }],
+      name: 'totalSupply',
+      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
       stateMutability: 'view',
       type: 'function',
     },

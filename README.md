@@ -1,4 +1,4 @@
-# robopunk-project
+#sprites-nft-project
 
 ## Project setup
 ```

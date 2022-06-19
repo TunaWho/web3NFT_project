@@ -1,6 +1,8 @@
 /* eslint-disable */
 require('@nomiclabs/hardhat-waffle');
 require('@nomiclabs/hardhat-etherscan');
+require('@nomiclabs/hardhat-ethers');
+
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -39,7 +41,7 @@ module.exports = {
     },
   },
   paths: {
-    sources: './contracts/deployment',
+    sources: './contracts',
     tests: './test',
     cache: './cache',
     artifacts: './artifacts',

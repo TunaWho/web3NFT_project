@@ -2,30 +2,39 @@
 
 pragma solidity ^0.8.4;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
-contract RoboPunksNFT is ERC721, Ownable {
+contract SpritesNFT is ERC721Enumerable, Ownable {
     using SafeMath for uint256;
+    using Strings for uint256;
     using Counters for Counters.Counter;
 
     uint256 public mintPrice;
-    Counters.Counter public totalSupplyMinted; // the current number of NFTs wallet minted
     uint256 public maxSupply; // max NFTs wallet can minted
     uint256 public maxPerWallet; // limit NFTs can mint per user
     bool public isPublicMintEnabled; // enable to mint for wallets
-    string internal baseTokenUri;
+    string internal baseURI;
+    string public baseExtension;
     address payable public withdrawWallet;
 
     mapping(address => uint256) public totalMintedPerWallet; // keep track of the number of NFTs per wallet
 
-    constructor() payable ERC721("RoboPunksMega", "RPM") {
+    constructor(string memory _name, string memory _symbol)
+        payable
+        ERC721(_name, _symbol)
+    {
         mintPrice = 0.02 ether;
-        totalSupplyMinted._value = 0;
-        maxSupply = 1000;
+        maxSupply = 50;
         maxPerWallet = 3;
+        baseExtension = ".json";
+    }
+
+    function _baseURI() internal view virtual override returns (string memory) {
+        return baseURI;
     }
 
     function setIsPublicMintEnabled(bool _isPublicMintEnabled)
@@ -35,8 +44,12 @@ contract RoboPunksNFT is ERC721, Ownable {
         isPublicMintEnabled = _isPublicMintEnabled;
     }
 
-    function setBaseTokenUri(string calldata _baseTokenUri) external onlyOwner {
-        baseTokenUri = _baseTokenUri;
+    function setTokenURI(string memory _baseTokenURI) external onlyOwner {
+        baseURI = _baseTokenURI;
+    }
+
+    function canMint(address _from) public view returns (bool) {
+        return totalMintedPerWallet[_from] < maxPerWallet;
     }
 
     function tokenURI(uint256 _tokenId)
@@ -49,14 +62,18 @@ contract RoboPunksNFT is ERC721, Ownable {
             _exists(_tokenId),
             "ERC721Metadata: URI query for nonexistent token"
         );
+
+        string memory currentBaseURI = _baseURI();
         return
-            string(
-                abi.encodePacked(
-                    baseTokenUri,
-                    Strings.toString(_tokenId),
-                    ".json"
+            bytes(currentBaseURI).length > 0
+                ? string(
+                    abi.encodePacked(
+                        baseURI,
+                        _tokenId.toString(),
+                        baseExtension
+                    )
                 )
-            );
+                : "";
     }
 
     function withdraw() external onlyOwner {
@@ -67,20 +84,21 @@ contract RoboPunksNFT is ERC721, Ownable {
     }
 
     function mint(uint256 _quantity) public payable {
+        uint256 totalSupplyMinted = totalSupply();
+        totalMintedPerWallet[msg.sender] = totalMintedPerWallet[msg.sender].add(
+            _quantity
+        );
+
         require(isPublicMintEnabled, "Minting is not enable");
         require(msg.value <= mintPrice.mul(_quantity), "wrong mint value");
+        require(totalSupplyMinted.add(_quantity) <= maxSupply, "sold out");
         require(
-            totalSupplyMinted._value.add(_quantity) <= maxSupply,
-            "sold out"
-        );
-        require(
-            totalMintedPerWallet[msg.sender].add(_quantity) <= maxPerWallet,
+            totalMintedPerWallet[msg.sender] <= maxPerWallet,
             "wallet reached max minting able"
         );
 
-        for (uint256 index = 0; index < _quantity; index++) {
-            uint256 newTokenId = totalSupplyMinted._value.add(1);
-            totalSupplyMinted.increment();
+        for (uint256 index = 1; index <= _quantity; index++) {
+            uint256 newTokenId = totalSupplyMinted.add(index);
             _safeMint(msg.sender, newTokenId);
         }
     }

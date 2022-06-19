@@ -8,10 +8,10 @@
 import { computed } from 'vue';
 import { useStore } from 'vuex';
 import Web3 from 'web3';
-import { getAccountData } from '@/utils/roboToken';
+import { getAccountData } from '@/utils/spriteToken';
 import { METAMASK } from '@/utils/constants';
 import eventBus from '@/events';
-import roboPunksToken from '@/domain/roboPunks/token';
+import spriteToken from '@/domain/sprite/token';
 
 const store = useStore();
 
@@ -37,7 +37,7 @@ async function connectWithMetamask() {
 
     const accountData = await getAccountData(
       web3.value.instance,
-      roboPunksToken[0]
+      spriteToken[0]
     );
 
     if (accountData) {

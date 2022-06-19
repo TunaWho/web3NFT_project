@@ -1,5 +1,6 @@
 /* eslint-disable no-use-before-define, no-console */
 import { METAMASK } from '../constants';
+import spriteToken from '@/domain/sprite/token';
 
 /**
  * It gets the balance of a token for a given address
@@ -69,4 +70,22 @@ export const getAccountForMetaMask = async () => {
     });
 
   return accounts;
+};
+
+export const canMint = async (web3, accountAddress) => {
+  try {
+    const sprite = new web3.eth.Contract(
+      spriteToken[0].abi,
+      spriteToken[0].contractAddress
+    );
+    const result = await sprite.methods
+      .canMint(accountAddress)
+      .call({ from: accountAddress });
+
+    return result;
+  } catch (e) {
+    console.error(e);
+
+    return null;
+  }
 };

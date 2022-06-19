@@ -2,10 +2,10 @@
   <div class="web3-content">
     <div id="mint">
       <div>
-        <h1 id="title">RoboPunks</h1>
+        <h1 id="title">Sprites</h1>
         <p id="description">
-          It's 2078. Can the RoboPunks NFT save humans from destructive rampant
-          NFT speculation? Mint RoboPunks to find out.
+          It's 2078. Can the Sprites NFT save humans from destructive rampant
+          NFT speculation? Mint Sprites to find out.
         </p>
         <div v-if="store.state.isLogin">
           <div id="chosen-amounts">
@@ -25,10 +25,10 @@
 import { ref, onMounted, computed } from 'vue';
 import { useStore } from 'vuex';
 import Web3 from 'web3';
-import roboToken from '@/domain/roboPunks/token';
-import { getAccountData } from '@/utils/roboToken';
+import spriteToken from '@/domain/sprite/token';
+import { getAccountData, canMint } from '@/utils/spriteToken';
 import eventBus from '@/events';
-import { METAMASK } from '@/utils/constants';
+import { METAMASK, MINT_FEE } from '@/utils/constants';
 
 const store = useStore();
 const mintAmount = ref(1);
@@ -40,6 +40,16 @@ const web3 = computed(() => {
 
 const account = computed(() => {
   return store.state.account;
+});
+
+const mintAmountBN = computed(() => {
+  return web3.value.instance.utils.toBN(mintAmount.value);
+});
+
+const totalMintFee = computed(() => {
+  return web3.value.instance.utils.toWei(
+    (MINT_FEE * mintAmount.value).toString()
+  );
 });
 
 function handleDecrement() {
@@ -87,22 +97,32 @@ function checkTransactionStatus(transactionHash, seconds) {
 }
 
 function mintNFT() {
-  const { abi, contractAddress } = roboToken[0];
-  const roboPoolContract = new this.web3.instance.eth.Contract(
+  const { abi, contractAddress } = spriteToken[0];
+  const spritePoolContract = new web3.value.instance.eth.Contract(
     abi,
     contractAddress
   );
 
-  roboPoolContract.methods
-    .mint(mintAmount.value)
-    .send({ from: account.value.address })
-    .on('transactionHash', (transactionHash) => {
-      sessionStorage.setItem('transactionHash', transactionHash);
-      checkTransactionStatus(transactionHash, 10);
-    })
-    .on('error', () => {
-      incompleteTransaction();
-    });
+  canMint(web3.value.instance, account.value.address).then((result) => {
+    if (result) {
+      spritePoolContract.methods
+        .mint(mintAmountBN.value)
+        .send({ from: account.value.address, value: totalMintFee.value })
+        .on('transactionHash', (transactionHash) => {
+          sessionStorage.setItem('transactionHash', transactionHash);
+          checkTransactionStatus(transactionHash, 10);
+        })
+        .on('error', () => {
+          incompleteTransaction();
+        });
+    } else {
+      eventBus.$emit('toastify', {
+        title: 'Error',
+        type: 'error',
+        content: 'you have reached the limit minting NFT!',
+      });
+    }
+  });
 }
 
 onMounted(async () => {
@@ -140,7 +160,7 @@ onMounted(async () => {
 
       const accountData = await getAccountData(
         web3.value.instance,
-        roboToken[0]
+        spriteToken[0]
       );
 
       if (accountData) {
