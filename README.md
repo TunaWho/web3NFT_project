@@ -1,4 +1,4 @@
-# <img src="https://hair-dev.s3.us-east-2.amazonaws.com/robopunkbg/sprite.png" alt="SpriteNFT" height="40px"></img>
+# <img src="https://hair-dev.s3.us-east-2.amazonaws.com/robopunkbg/sprite.png" alt="SpriteNFT" height="100px"></img>
 #Sprites-NFT
 
 ## Overview
