@@ -2,10 +2,9 @@
 
 ## Overview
 ### Setup
-
+```
 yarn install
 ```
-
 ### Compiles and hot-reloads for development
 ```
 yarn serve
@@ -21,6 +20,7 @@ yarn build
 yarn lint
 ```
 ### Usage
+
 * Contract test for this [here](https://rinkeby.etherscan.io/address/0xE8C7f400e50052beF30559b9f058Dd2330ff5C93#code)
 
 ### Customize configuration
