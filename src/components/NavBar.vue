@@ -32,13 +32,8 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
-import ConnectWallet from '@/components/ConnectWallet.vue';
+import ConnectWallet from '@/components/wallet/ConnectWallet.vue';
 import Facebook from '@/assets/images/social-media-icons/facebook_32x32.png';
 import Twitter from '@/assets/images/social-media-icons/twitter_32x32.png';
 import Email from '@/assets/images/social-media-icons/email_32x32.png';
-
-onMounted(() => {
-  console.log('hi');
-});
 </script>

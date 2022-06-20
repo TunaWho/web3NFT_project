@@ -1,7 +1,8 @@
-#sprites-nft-project
+#Sprites-NFT
 
-## Project setup
-```
+## Overview
+### Setup
+
 yarn install
 ```
 
@@ -19,6 +20,8 @@ yarn build
 ```
 yarn lint
 ```
+### Usage
+* Contract test for this [here](https://rinkeby.etherscan.io/address/0xE8C7f400e50052beF30559b9f058Dd2330ff5C93#code)
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

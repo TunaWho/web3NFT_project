@@ -16,7 +16,6 @@ const store = createStore({
 
   mutations: {
     onLogout() {
-      localStorage.removeItem('walletconnect');
       sessionStorage.removeItem('address');
       sessionStorage.removeItem('provider');
       window.location.reload();

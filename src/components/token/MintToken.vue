@@ -125,15 +125,23 @@ function mintNFT() {
   });
 }
 
+function handleChainChanged() {
+  window.location.reload();
+}
+
+function handleDisconnected() {
+  store.dispatch('onLogout');
+}
+
 onMounted(async () => {
   try {
-    console.log(store.state.isLogin);
     if (store.state.isLogin) {
       console.log(sessionStorage.getItem('provider'));
       if (sessionStorage.getItem('provider') === METAMASK) {
         if (!window.ethereum) {
           return;
         }
+
         const instance = new Web3(window.ethereum);
         const chainId = await instance.eth.net.getId();
         store.dispatch('web3/update', {
@@ -143,20 +151,15 @@ onMounted(async () => {
         });
       }
 
-      // // Subscribe to accounts change
-      // web3.value.instance.currentProvider.on('accountsChanged', (accounts) => {
-      //   handleAccountChanged(accounts);
-      // });
+      // Subscribe to chainId change
+      web3.value.instance.currentProvider.on('chainChanged', (chainId) => {
+        handleChainChanged(chainId);
+      });
 
-      // // Subscribe to chainId change
-      // web3.value.instance.currentProvider.on('chainChanged', (chainId) => {
-      //   handleChainChanged(chainId);
-      // });
-
-      // // Subscribe to session disconnection
-      // web3.value.instance.currentProvider.on('disconnect', () => {
-      //   handleDisconnected();
-      // });
+      // Subscribe to session disconnection
+      web3.value.instance.currentProvider.on('disconnect', () => {
+        handleDisconnected();
+      });
 
       const accountData = await getAccountData(
         web3.value.instance,

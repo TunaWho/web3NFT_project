@@ -12,7 +12,7 @@
 <script setup>
 import NavHeader from '@/components/NavBar.vue';
 import ToastNotify from '@/components/ToastNotify.vue';
-import MintToken from '@/components/MintToken.vue';
+import MintToken from '@/components/token/MintToken.vue';
 </script>
 
 <style lang="scss" src="@/assets/scss/common.scss"></style>
