@@ -17,7 +17,7 @@ body {
 }
 
 section.overlay {
-  opacity: 0.85;
+  opacity: 0.95;
   z-index: 10;
   width: 100%;
   height: 100%;
@@ -28,6 +28,9 @@ section.overlay {
     text-align: center;
     font-family: "Press Start 2P", "VT323";
     color: #fff;
+    a {
+      color: #fff;
+    }
     .navigation {
       display: flex;
       justify-content: space-between;
@@ -54,6 +57,7 @@ section.overlay {
           font-size: 13px;
         }
         .auth-wallet {
+          position: relative;
           button {
             background-color: #d6517d;
             border-radius: 5px;
@@ -65,10 +69,14 @@ section.overlay {
             margin: 0 15px;
             font-size: 7px;
             white-space: nowrap;
+            &:hover {
+              background-color: #d6517dbb !important;
+            }
           }
         }
       }
     }
+
     .web3-content {
       display: flex;
       justify-content: center;
@@ -84,13 +92,13 @@ section.overlay {
         #description {
           font-size: 24px;
           font-family: "VT323";
-          letter-spacing: -5.5%;
+          letter-spacing: -1px;
           text-shadow: 0 2px 2px #000000;
         }
         #get-connect {
           font-size: 24px;
           font-family: "VT323";
-          letter-spacing: -5.5%;
+          letter-spacing: -1px;
           text-shadow: 0 3px #000000;
           color: #d6517d;
           margin-top: 65px;
@@ -127,6 +135,75 @@ section.overlay {
         }
       }
     }
+
+    .me {
+      @extend .web3-content;
+      #info {
+        @extend #mint;
+        text-align: left;
+        width: auto !important;
+        .type {
+          p {
+            border-right: 0.15em solid orange;
+            overflow: hidden;
+            white-space: nowrap;
+          }
+          p:nth-child(1) {
+            width: 52%;
+            -webkit-animation: type 2s steps(40, end);
+            animation: type 2s steps(40, end);
+            -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
+          }
+          p:nth-child(2) {
+            width: 42%;
+            opacity: 0;
+            -webkit-animation: type2 2s steps(40, end);
+            animation: type2 2s steps(40, end);
+            -webkit-animation-delay: 2s;
+            animation-delay: 2s;
+            -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
+          }
+          p:nth-child(3) {
+            width: 100%;
+            opacity: 0;
+            -webkit-animation: type3 4s steps(40, end);
+            animation: type3 4s steps(40, end);
+            -webkit-animation-delay: 4s;
+            animation-delay: 4s;
+            -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
+          }
+          p:nth-child(4) {
+            width: 33%;
+            opacity: 0;
+            -webkit-animation: type4 2s steps(40, end);
+            animation: type4 2s steps(40, end);
+            -webkit-animation-delay: 8s;
+            animation-delay: 8s;
+            -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
+          }
+          p:nth-child(5) {
+            width: 76%;
+            opacity: 0;
+            -webkit-animation: type5 4s steps(20, end),
+              blink 0.5s step-end infinite alternate;
+            animation: type5 4s steps(20, end),
+              blink 0.5s step-end infinite alternate;
+            -webkit-animation-delay: 10s;
+            animation-delay: 10s;
+            -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
+          }
+        }
+        .description {
+          @extend #description;
+          font-size: 28px !important;
+        }
+      }
+    }
   }
   .background-effect {
     z-index: -1;
@@ -141,4 +218,180 @@ section.overlay {
     background-attachment: fixed;
     background-position: 40% 40%;
   }
+}
+
+/* Animation Keyframes */
+@keyframes type {
+  0% {
+    width: 0;
+  }
+  99.9% {
+    border-right: 0.15em solid orange;
+  }
+  100% {
+    border: none;
+  }
+}
+
+@-webkit-keyframes type {
+  0% {
+    width: 0;
+  }
+  99.9% {
+    border-right: 0.15em solid orange;
+  }
+  100% {
+    border: none;
+  }
+}
+
+@keyframes type2 {
+  0% {
+    width: 0;
+  }
+  1% {
+    opacity: 1;
+  }
+  99.9% {
+    border-right: 0.15em solid orange;
+  }
+  100% {
+    opacity: 1;
+    border: none;
+  }
+}
+
+@-webkit-keyframes type2 {
+  0% {
+    width: 0;
+  }
+  1% {
+    opacity: 1;
+  }
+  99.9% {
+    border-right: 0.15em solid orange;
+  }
+  100% {
+    opacity: 1;
+    border: none;
+  }
+}
+
+@keyframes type3 {
+  0% {
+    width: 0;
+  }
+  1% {
+    opacity: 1;
+  }
+  99.9% {
+    border-right: 0.15em solid orange;
+  }
+  100% {
+    opacity: 1;
+    border: none;
+  }
+}
+
+@-webkit-keyframes type3 {
+  0% {
+    width: 0;
+  }
+  1% {
+    opacity: 1;
+  }
+  99.9% {
+    border-right: 0.15em solid orange;
+  }
+  100% {
+    opacity: 1;
+    border: none;
+  }
+}
+
+@keyframes type4 {
+  0% {
+    width: 0;
+  }
+  1% {
+    opacity: 1;
+  }
+  99.9% {
+    border-right: 0.15em solid orange;
+  }
+  100% {
+    opacity: 1;
+    border: none;
+  }
+}
+
+@-webkit-keyframes type4 {
+  0% {
+    width: 0;
+  }
+  1% {
+    opacity: 1;
+  }
+  99.9% {
+    border-right: 0.15em solid orange;
+  }
+  100% {
+    opacity: 1;
+    border: none;
+  }
+}
+
+@keyframes type5 {
+  0% {
+    width: 0;
+  }
+  1% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes type5 {
+  0% {
+    width: 0;
+  }
+  1% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
+@-webkit-keyframes blink {
+  50% {
+    border-color: tranparent;
+  }
+}
+/* End Animation Keyframes */
+
+/* transitions */
+.fade-enter-from {
+  opacity: 0;
+  transform: translateX(100px);
+}
+
+.fade-enter-active {
+  transition: ass 0.4s ease-out;
+}
+
+.fade-leave-to {
+  opacity: 0;
+  transform: translateX(-100px);
+}
+
+.fade-leave-to {
+  transition: all 0.4s ease-in;
 }

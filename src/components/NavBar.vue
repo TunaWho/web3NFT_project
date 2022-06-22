@@ -22,9 +22,15 @@
 
     <!-- right side -->
     <div class="info-links">
-      <div>Me</div>
-      <div>Mint</div>
-      <div>Description</div>
+      <router-link class="link" to="/me">
+        <div>Me</div>
+      </router-link>
+      <router-link class="link" to="/">
+        <div>Mint</div>
+      </router-link>
+      <router-link class="link" to="javascript:void(0)">
+        <div>Contact</div>
+      </router-link>
       <connect-wallet></connect-wallet>
     </div>
     <!-- end right side -->
