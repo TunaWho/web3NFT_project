@@ -1,8 +1,16 @@
 <template>
-  <div id="logout">Logout</div>
+  <div id="logout" @click="onLogout">Logout</div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useStore } from 'vuex';
+
+const store = useStore();
+
+function onLogout() {
+  store.dispatch('onLogout');
+}
+</script>
 
 <style lang="scss" scoped>
 #logout {
