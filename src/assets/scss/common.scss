@@ -223,9 +223,11 @@ section.overlay {
 /* Animation Keyframes */
 @keyframes type {
   0% {
+    border-color: transparent;
     width: 0;
   }
   99.9% {
+    border-color: transparent;
     border-right: 0.15em solid orange;
   }
   100% {
@@ -235,9 +237,11 @@ section.overlay {
 
 @-webkit-keyframes type {
   0% {
+    border-color: transparent;
     width: 0;
   }
   99.9% {
+    border-color: transparent;
     border-right: 0.15em solid orange;
   }
   100% {
@@ -247,12 +251,15 @@ section.overlay {
 
 @keyframes type2 {
   0% {
+    border-color: transparent;
     width: 0;
   }
   1% {
+    border-color: transparent;
     opacity: 1;
   }
   99.9% {
+    border-color: transparent;
     border-right: 0.15em solid orange;
   }
   100% {
@@ -263,12 +270,15 @@ section.overlay {
 
 @-webkit-keyframes type2 {
   0% {
+    border-color: transparent;
     width: 0;
   }
   1% {
+    border-color: transparent;
     opacity: 1;
   }
   99.9% {
+    border-color: transparent;
     border-right: 0.15em solid orange;
   }
   100% {
@@ -279,12 +289,15 @@ section.overlay {
 
 @keyframes type3 {
   0% {
+    border-color: transparent;
     width: 0;
   }
   1% {
+    border-color: transparent;
     opacity: 1;
   }
   99.9% {
+    border-color: transparent;
     border-right: 0.15em solid orange;
   }
   100% {
@@ -295,12 +308,15 @@ section.overlay {
 
 @-webkit-keyframes type3 {
   0% {
+    border-color: transparent;
     width: 0;
   }
   1% {
+    border-color: transparent;
     opacity: 1;
   }
   99.9% {
+    border-color: transparent;
     border-right: 0.15em solid orange;
   }
   100% {
@@ -311,12 +327,15 @@ section.overlay {
 
 @keyframes type4 {
   0% {
+    border-color: transparent;
     width: 0;
   }
   1% {
+    border-color: transparent;
     opacity: 1;
   }
   99.9% {
+    border-color: transparent;
     border-right: 0.15em solid orange;
   }
   100% {
@@ -327,9 +346,11 @@ section.overlay {
 
 @-webkit-keyframes type4 {
   0% {
+    border-color: transparent;
     width: 0;
   }
   1% {
+    border-color: transparent;
     opacity: 1;
   }
   99.9% {
@@ -372,7 +393,7 @@ section.overlay {
 }
 @-webkit-keyframes blink {
   50% {
-    border-color: tranparent;
+    border-color: transparent;
   }
 }
 /* End Animation Keyframes */

@@ -10,10 +10,17 @@
         <div v-if="store.state.isLogin">
           <div id="chosen-amounts">
             <button id="decrement" @click="handleDecrement">-</button>
-            <input :value="mintAmount" type="number" readonly />
+            <input
+              class="text-gray-800 text-sm"
+              :value="mintAmount"
+              type="number"
+              readonly
+            />
             <button id="increment" @click="handleIncrement">+</button>
           </div>
-          <button id="minting" @click="mintNFT">Mint now</button>
+          <loading-button id="minting" :is-loading="onLoading" @click="mintNFT"
+            >Mint</loading-button
+          >
         </div>
         <p v-else id="get-connect">Connect to mint NFT</p>
       </div>
@@ -29,10 +36,12 @@ import spriteToken from '@/domain/sprite/token';
 import { getAccountData, canMint } from '@/utils/spriteToken';
 import eventBus from '@/events';
 import { METAMASK, MINT_FEE } from '@/utils/constants';
+import LoadingButton from '../buttons/LoadingButton.vue';
 
 const store = useStore();
 const mintAmount = ref(1);
 const checkStatusInterval = ref(null);
+const onLoading = ref(false);
 
 const web3 = computed(() => {
   return store.state.web3;
@@ -65,6 +74,8 @@ function handleIncrement() {
 }
 
 function completeTransaction() {
+  onLoading.value = true;
+
   eventBus.$emit('toastify', {
     title: 'Minted NFT!',
     type: 'success',
@@ -73,6 +84,8 @@ function completeTransaction() {
 }
 
 function incompleteTransaction() {
+  onLoading.value = false;
+
   eventBus.$emit('toastify', {
     title: 'Error',
     type: 'error',
@@ -104,6 +117,8 @@ function mintNFT() {
   );
 
   canMint(web3.value.instance, account.value.address).then((result) => {
+    onLoading.value = true;
+
     if (result) {
       spritePoolContract.methods
         .mint(mintAmountBN.value)
@@ -116,6 +131,8 @@ function mintNFT() {
           incompleteTransaction();
         });
     } else {
+      onLoading.value = false;
+
       eventBus.$emit('toastify', {
         title: 'Error',
         type: 'error',
