@@ -21,7 +21,7 @@ yarn lint
 ```
 ### Usage
 
-* Contract test for this [here](https://rinkeby.etherscan.io/address/0xE8C7f400e50052beF30559b9f058Dd2330ff5C93#code)
+* Contract test for this [here](https://rinkeby.etherscan.io/address/0x083cA3770EDBf43b9EAbe59507eB61b1e3B1A482#code)
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

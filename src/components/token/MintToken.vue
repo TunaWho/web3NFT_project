@@ -18,7 +18,11 @@
             />
             <button id="increment" @click="handleIncrement">+</button>
           </div>
-          <loading-button id="minting" :is-loading="onLoading" @click="mintNFT"
+          <loading-button
+            id="minting"
+            :disabled="onLoading"
+            :is-loading="onLoading"
+            @click="mintNFT"
             >Mint</loading-button
           >
         </div>
@@ -74,7 +78,7 @@ function handleIncrement() {
 }
 
 function completeTransaction() {
-  onLoading.value = true;
+  onLoading.value = false;
 
   eventBus.$emit('toastify', {
     title: 'Minted NFT!',

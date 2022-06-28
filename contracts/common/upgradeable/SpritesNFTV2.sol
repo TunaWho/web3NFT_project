@@ -2,35 +2,43 @@
 
 pragma solidity ^0.8.4;
 
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
+import "../base/BaseSpriteNFT.sol";
 
-contract SpritesNFTDev is ERC721Enumerable, Ownable {
+contract SpritesV2Upgradeable is
+    BaseSpriteNFT,
+    ERC721EnumerableUpgradeable,
+    OwnableUpgradeable
+{
     using SafeMath for uint256;
     using Strings for uint256;
     using Counters for Counters.Counter;
 
-    uint256 public mintPrice;
-    uint256 public maxSupply; // max NFTs wallet can minted
-    uint256 public maxPerWallet; // limit NFTs can mint per user
-    bool public isPublicMintEnabled; // enable to mint for wallets
-    string internal baseURI;
-    string public baseExtension;
-    address payable public withdrawWallet;
+    /**
+     * @param _maxSupply: max can be minting
+     * @param _maxPerWallet: limit minting per user
+     * @param _baseExtension: base extensions
+     * @param _name: name token collections
+     * @param _symbol: symbol token collections
+     * @param _admin: admin address with ownership
+     */
+    function initialize(
+        uint256 _maxSupply,
+        uint256 _maxPerWallet,
+        string memory _baseExtension,
+        string memory _name,
+        string memory _symbol,
+        address _admin
+    ) external initializer {
+        __BaseSpriteNFT_init(_maxSupply, _maxPerWallet, _baseExtension);
+        __ERC721_init(_name, _symbol);
+        __Ownable_init();
 
-    mapping(address => uint256) public totalMintedPerWallet; // keep track of the number of NFTs per wallet
-
-    constructor(string memory _name, string memory _symbol)
-        payable
-        ERC721(_name, _symbol)
-    {
-        mintPrice = 0.02 ether;
-        maxSupply = 50;
-        maxPerWallet = 3;
-        baseExtension = ".json";
+        transferOwnership(_admin);
     }
 
     function _baseURI() internal view virtual override returns (string memory) {
@@ -46,6 +54,33 @@ contract SpritesNFTDev is ERC721Enumerable, Ownable {
 
     function setTokenURI(string memory _baseTokenURI) external onlyOwner {
         baseURI = _baseTokenURI;
+    }
+
+    function setFeeMint(uint256 _mintPrice) external onlyOwner {
+        require(_mintPrice > 0, "mint price must be greater than 0");
+        mintPrice = _mintPrice;
+    }
+
+    function addMaxSupply(uint256 _maxSupply) external onlyOwner {
+        require(_maxSupply > 10, "add max supply must be greater than 10");
+        maxSupply = maxSupply.add(_maxSupply);
+    }
+
+    function addMaxPerWallet(uint256 _maxPerWallet) external onlyOwner {
+        require(_maxPerWallet > 5, "add max per wallet must be greater than 5");
+        maxPerWallet = maxPerWallet.add(_maxPerWallet);
+    }
+
+    function getMaxPerWallet() public view returns (uint256) {
+        return maxPerWallet;
+    }
+
+    function getTotalMinted(address wallet) public view returns (uint256) {
+        return totalMintedPerWallet[wallet];
+    }
+
+    function getMaxSupply() public view returns (uint256) {
+        return maxSupply;
     }
 
     function canMint(address _from) public view returns (bool) {
