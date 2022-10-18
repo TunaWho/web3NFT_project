@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "checking convention lint"
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
@@ -83,7 +83,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,vue}": [
-      "vue-cli-service lint",
+      "checking convention lint",
       "git add"
     ]
   }
