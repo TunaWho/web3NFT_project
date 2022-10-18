@@ -34,6 +34,18 @@
     "indent": ["error", 2, {
       "SwitchCase": 1
     }],
+    "vue/html-indent": ["error", 2, {
+      "attribute": 1,
+      "closeBracket": 0,
+      "switchCase": 0,
+      "ignores": []
+    }],
+    "vue/max-attributes-per-line": ["error", {
+      "singleline": 10,
+      "multiline": {
+        "max": 1
+      }
+    }],
     "vue/component-name-in-template-casing": ["error", "kebab-case", {
       "registeredComponentsOnly": false,
       "ignores": []

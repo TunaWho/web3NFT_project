@@ -23,9 +23,9 @@
           />
         </div>
         <div class="block-notification-button">
-          <span aria-hidden="true" @click="removeNotification(index)"
-            >&times;</span
-          >
+          <span aria-hidden="true" @click="removeNotification(index)">
+            &times;
+          </span>
         </div>
       </div>
     </div>
@@ -125,9 +125,8 @@ function appendNotification(notification) {
 
   const notificationId = (Math.random() + 1).toString(36).substring(7);
   const timeout = notification.timeout || defaultTimeout.value;
-  notifications.value = {
-    [notificationId]: notification,
-  };
+
+  notifications.value[notificationId] = notification;
 
   setAutoHiddenNotification(notificationId, timeout);
   setClassShow(notificationId);

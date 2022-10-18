@@ -23,8 +23,9 @@
             :disabled="onLoading"
             :is-loading="onLoading"
             @click="mintNFT"
-            >Mint</loading-button
           >
+            Mint
+          </loading-button>
         </div>
         <p v-else id="get-connect">Connect to mint NFT</p>
       </div>
@@ -156,6 +157,20 @@ function handleDisconnected() {
 
 onMounted(async () => {
   try {
+    await eventBus.$emit('toastify', {
+      title: 'Connect Failed',
+      type: 'error',
+      content: 'Please check the network!',
+    });
+    setTimeout(() => {
+      console.log('Please');
+    }, 0);
+    await eventBus.$emit('toastify', {
+      title: 'Connect Failed',
+      type: 'success',
+      content: 'Please check the network!',
+    });
+    console.log('ok3');
     if (store.state.isLogin) {
       console.log(sessionStorage.getItem('provider'));
       if (sessionStorage.getItem('provider') === METAMASK) {
